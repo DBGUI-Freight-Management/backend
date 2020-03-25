@@ -1,0 +1,1 @@
+docker exec -t -i dbdev_mysql_1 /bin/bash
