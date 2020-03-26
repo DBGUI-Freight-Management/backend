@@ -54,9 +54,7 @@ router.post('/shipCompanies/post', async (req, res) => {
 
 //Delete a shipping company
 router.delete('/shipCompanies/:id/delete', async (req, res) => {
-  var id = req.params.id;
-  var sql = "DELETE FROM shipCompanies WHERE id = "
-  sql += id;
+  let sql = `DELETE FROM shipCompanies WHERE id = ${req.params.id}`;
   console.log(sql);
 	con.query(sql,function (err, result, fields) {
 		if (err)
@@ -77,17 +75,8 @@ router.get('/ships/get', function (req, res) {
 
 //Post a new ship
 router.post('/ships/post', async (req, res) => {
+  let sql = `INSERT INTO ships(name, id, companyID) VALUES ('${req.query.name}', '${req.query.id}', '${req.query.companyid}')`;
   res.send(req.params);
-  var sql = "INSERT INTO ships(name, id, companyID) VALUES (";
-  var name = req.query.name;
-  sql += name;
-  sql += ", ";
-  var id = req.query.id;
-  sql += id;
-  sql += ", "
-  var companyid = req.query.companyid
-  sql += companyid
-  sql += ")";
   console.log(sql);
 	con.query(sql, function (err, result, fields) {
 		if (err) throw err;
@@ -97,9 +86,7 @@ router.post('/ships/post', async (req, res) => {
 
 //Delete a ship
 router.delete('/ships/:id/delete', async (req, res) => {
-  var id = req.params.id;
-  var sql = "DELETE FROM ships WHERE id = "
-  sql += id;
+  let sql = `DELETE FROM ships WHERE id = ${req.params.id}`;
   console.log(sql);
 	con.query(sql,function (err, result, fields) {
 		if (err)
@@ -109,15 +96,9 @@ router.delete('/ships/:id/delete', async (req, res) => {
 });
 
 // // PUT
-// // /api/products/{productCode}/post/{newQuantity}
 // router.put('/products/:code/post/:quantity', async (req, res) => {
-//   var code = req.params.code;
-//   var quantity = req.params.quantity;
-//   var sql = "UPDATE products SET quantityInStock = ";
-//   sql += quantity;
-//   sql += " WHERE productCode = '";
-//   sql += code;
-//   sql += "'";
+//   let sql = `UPDATE products SET quantityInStock = ${req.params.quantity}
+//              WHERE productCode = '${req.params.code}'`;
 //   console.log(sql);
 // 	con.query(sql, function (err, result, fields) {
 // 		if (err) throw err;
