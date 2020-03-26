@@ -44,15 +44,8 @@ router.get('/shipCompanies/get', function (req, res) {
 
 //Post a new shipping company
 router.post('/shipCompanies/post', async (req, res) => {
+  let sql = `INSERT INTO shipCompanies(name, id) VALUES ('${req.query.name}', '${req.query.id}')`;
   res.send(req.params);
-  var sql = "INSERT INTO shipCompanies(name, id) VALUES (";
-  var name = req.query.name;
-  sql += name;
-  sql += ", ";
-  var id = req.query.id;
-  sql += id;
-  sql += ")";
-  
 	con.query(sql, function (err, result, fields) {
 		if (err) throw err;
 		res.end(JSON.stringify(result)); // Result in JSON format
