@@ -42,6 +42,23 @@ router.get('/companies/get', function (req, res) {
 	});
 });
 
+//Get shipping companies
+router.get('/companies/get/shipping', function (req, res) {
+	con.query("SELECT * FROM companies WHERE companyType = 1", function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+//Get client companies
+router.get('/companies/get/client', function (req, res) {
+	con.query("SELECT * FROM companies WHERE companyType = 2", function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+
 //Post a new company
 router.post('/companies/post', async (req, res) => {
   let sql = `INSERT INTO companies(name, companyType) VALUES (\'${req.query.name}\', ${req.query.companyType})`;
