@@ -32,19 +32,19 @@ router.use(function(req, res, next) {
 	next();
 });
 
-//shipCompanies
+//companies
 
-//Get shipping companies
-router.get('/shipCompanies/get', function (req, res) {
-	con.query("SELECT * FROM shipCompanies", function (err, result, fields) {
+//Get companies
+router.get('/companies/get', function (req, res) {
+	con.query("SELECT * FROM companies", function (err, result, fields) {
 		if (err) throw err;
 		res.end(JSON.stringify(result)); // Result in JSON format
 	});
 });
 
-//Post a new shipping company
-router.post('/shipCompanies/post', async (req, res) => {
-  let sql = `INSERT INTO shipCompanies(name, id) VALUES ('${req.query.name}', '${req.query.id}')`;
+//Post a new company
+router.post('/companies/post', async (req, res) => {
+  let sql = `INSERT INTO companies(name, companyType) VALUES (\'${req.query.name}\', ${req.query.companyType})`;
   res.send(req.params);
 	con.query(sql, function (err, result, fields) {
 		if (err) throw err;
@@ -52,9 +52,9 @@ router.post('/shipCompanies/post', async (req, res) => {
 	});
 });
 
-//Delete a shipping company
-router.delete('/shipCompanies/:id/delete', async (req, res) => {
-  let sql = `DELETE FROM shipCompanies WHERE id = ${req.params.id}`;
+//Delete a company
+router.delete('/companies/:id/delete', async (req, res) => {
+  let sql = `DELETE FROM companies WHERE id = ${req.params.id}`;
   console.log(sql);
 	con.query(sql,function (err, result, fields) {
 		if (err)
@@ -75,7 +75,7 @@ router.get('/ships/get', function (req, res) {
 
 //Post a new ship
 router.post('/ships/post', async (req, res) => {
-  let sql = `INSERT INTO ships(name, id, companyID) VALUES ('${req.query.name}', '${req.query.id}', '${req.query.companyid}')`;
+  let sql = `INSERT INTO ships(name, companyID) VALUES (\'${req.query.name}\', ${req.query.companyid})`;
   res.send(req.params);
   console.log(sql);
 	con.query(sql, function (err, result, fields) {
