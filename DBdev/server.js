@@ -95,6 +95,71 @@ router.delete('/ships/:id/delete', async (req, res) => {
 	  });
 });
 
+//accountTypes
+
+//Get accountTypes
+router.get('/accountTypes/get', function (req, res) {
+	con.query("SELECT * FROM accountTypes", function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+//Post a new account type (You probably shouldn't do this)
+router.post('/accountTypes/post', async (req, res) => {
+  let sql = `INSERT INTO accountTypes(type, description) VALUES (\'${req.query.type}\', \'${req.query.description}\')`;
+  res.send(req.params);
+  console.log(sql);
+	con.query(sql, function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+//Delete a account type (You probably shouldn't do this)
+router.delete('/accountTypes/:id/delete', async (req, res) => {
+  let sql = `DELETE FROM accountTypes WHERE id = ${req.params.id}`;
+  console.log(sql);
+	con.query(sql,function (err, result, fields) {
+		if (err)
+			return console.error(error.message);
+		res.end(JSON.stringify(result));
+	  });
+});
+
+//users
+
+//Get users
+router.get('/users/get', function (req, res) {
+	con.query("SELECT * FROM users", function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+//Post a user
+router.post('/users/post', async (req, res) => {
+  let sql = `INSERT INTO users(username, email, password, accountType, companyID) VALUES (\'${req.query.username}\', \'${req.query.email}\', \'${req.query.password}\', ${req.query.type}, ${req.query.companyid})`;
+  res.send(req.params);
+  console.log(sql);
+	con.query(sql, function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+//Delete a account type (You probably shouldn't do this)
+router.delete('/users/:id/delete', async (req, res) => {
+  let sql = `DELETE FROM users WHERE id = ${req.params.id}`;
+  console.log(sql);
+	con.query(sql,function (err, result, fields) {
+		if (err)
+			return console.error(error.message);
+		res.end(JSON.stringify(result));
+	  });
+});
+
+
 // // PUT
 // router.put('/products/:code/post/:quantity', async (req, res) => {
 //   let sql = `UPDATE products SET quantityInStock = ${req.params.quantity}
