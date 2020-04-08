@@ -58,7 +58,6 @@ router.get('/companies/get/client', function (req, res) {
 	});
 });
 
-
 //Post a new company
 router.post('/companies/post', async (req, res) => {
   let sql = `INSERT INTO companies(name, companyType) VALUES (\'${req.query.name}\', ${req.query.companyType})`;
@@ -85,6 +84,26 @@ router.delete('/companies/:id/delete', async (req, res) => {
 //Get ships
 router.get('/ships/get', function (req, res) {
 	con.query("SELECT * FROM ships", function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+//Get ships with destinations
+router.get('/ships/getWithDestinations', function (req, res) {
+	//statusLog = 'active'
+	con.query("SELECT * FROM ships s INNER JOIN trips t " +
+		"ON s.tripID = t.tripID WHERE s.statusLog = \'on route\';", function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+//Get all ship logs for a particular ship captain
+router.get('/ships/getWithDestinations', function (req, res) {
+	//statusLog = 'active'
+	con.query("SELECT * FROM ships s INNER JOIN trips t " +
+		"ON s.tripID = t.tripID WHERE s.statusLog = \'on route\';", function (err, result, fields) {
 		if (err) throw err;
 		res.end(JSON.stringify(result)); // Result in JSON format
 	});
@@ -180,7 +199,7 @@ router.delete('/users/:id/delete', async (req, res) => {
 // // PUT
 // router.put('/products/:code/post/:quantity', async (req, res) => {
 //   let sql = `UPDATE products SET quantityInStock = ${req.params.quantity}
-//              WHERE productCode = '${req.params.code}'`;
+//              WHERE productCode = \'${req.params.code}\'`;
 //   console.log(sql);
 // 	con.query(sql, function (err, result, fields) {
 // 		if (err) throw err;
