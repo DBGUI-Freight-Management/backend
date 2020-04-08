@@ -81,7 +81,7 @@ router.delete('/companies/:id/delete', async (req, res) => {
 
 //ships
 
-//Get ships based on what company the user works for
+//Get ships based on what company the user works for (.../ships/get?companyID=SOME_ID)
 router.get('/ships/get', function (req, res) {
 	con.query("SELECT * FROM ships WHERE companyID = " +
 		${req.query.companyID} + ";", function (err, result, fields) {
@@ -90,7 +90,7 @@ router.get('/ships/get', function (req, res) {
 	});
 });
 
-//Get ships with destinations
+//Get ships with destinations (.../ships/getWithDestinations?companyID=SOME_ID)
 router.get('/ships/getWithDestinations', function (req, res) {
 	//statusLog = 'active'
 	con.query("SELECT * FROM ships s INNER JOIN trips t " +
@@ -101,7 +101,7 @@ router.get('/ships/getWithDestinations', function (req, res) {
 	});
 });
 
-//Get all ship logs for a particular ship
+//Get all ship logs for a particular ship (.../ships/getLogs?shipID=SOME_ID)
 router.get('/ships/getLogs', function (req, res) {
 	con.query("SELECT l.* FROM trips t INNER JOIN logs l WHERE t.shipID = " +
 		${req.query.shipID} + ";", function (err, result, fields) {
