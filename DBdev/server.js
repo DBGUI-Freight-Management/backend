@@ -119,17 +119,6 @@ router.get('/ships/getLog', function (req, res) {
 	});
 });
 
-//
-router.get('/logs/:id/delete', async (req, res) => {
-	let sql = `DELETE FROM ships WHERE id = ${req.params.id}`;
-	console.log(sql);
-	con.query(sql,function (err, result, fields) {
-		if (err)
-			return console.error(error.message);
-		res.end(JSON.stringify(result));
-	});
-});
-
 //Post a new ship
 router.post('/ships/post', async (req, res) => {
   let sql = `INSERT INTO ships(name, companyID) VALUES (\'${req.query.name}\', ${req.query.companyid})`;
