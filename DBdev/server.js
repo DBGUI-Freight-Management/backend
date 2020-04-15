@@ -95,7 +95,7 @@ router.get('/ships/getWithDestinations', function (req, res) {
 	//statusLog = 'active'
 	con.query("SELECT * FROM ships s INNER JOIN trips t " +
 		"ON s.tripID = t.tripID WHERE s.statusLog = \'on route\' AND companyID = " +
-		${req.query.companyID} ";", function (err, result, fields) {
+		${req.query.companyID} + ";", function (err, result, fields) {
 		if (err) throw err;
 		res.end(JSON.stringify(result)); // Result in JSON format
 	});
@@ -107,6 +107,26 @@ router.get('/ships/getLogs', function (req, res) {
 		${req.query.shipID} + ";", function (err, result, fields) {
 		if (err) throw err;
 		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+//Get the log for a certain ship at a given location (.../ships/getLog?shipID=SOME_ID&location=SOME_LOCATION)
+router.get('/ships/getLog', function (req, res) {
+	con.query("SELECT l.* FROM trips t INNER JOIN logs l WHERE t.shipID = " +
+		${req.query.shipID} + " AND l.location = " + ${req.query.location} + ";", function (err, result, fields) {
+		if (err) throw err;
+		res.end(JSON.stringify(result)); // Result in JSON format
+	});
+});
+
+//
+router.get('/logs/:id/delete', async (req, res) => {
+	let sql = `DELETE FROM ships WHERE id = ${req.params.id}`;
+	console.log(sql);
+	con.query(sql,function (err, result, fields) {
+		if (err)
+			return console.error(error.message);
+		res.end(JSON.stringify(result));
 	});
 });
 
@@ -195,7 +215,6 @@ router.delete('/users/:id/delete', async (req, res) => {
 		res.end(JSON.stringify(result));
 	  });
 });
-
 
 // // PUT
 // router.put('/products/:code/post/:quantity', async (req, res) => {
